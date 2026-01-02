@@ -240,6 +240,10 @@ public actor PolarLicenseClient {
                 throw PolarLicenseError.invalidResponse
             }
         case 403:
+            // Try to extract error detail from response
+            if let errorBody = try? JSONDecoder().decode(ErrorResponse.self, from: data) {
+                throw PolarLicenseError.httpError(statusCode: 403, message: errorBody.detail ?? "Forbidden")
+            }
             throw PolarLicenseError.httpError(statusCode: 403, message: "Forbidden")
         case 404:
             throw PolarLicenseError.notFound
