@@ -39,6 +39,12 @@ public enum PolarLicenseError: LocalizedError {
     /// The request contained invalid data.
     case unprocessableEntity(String)
 
+    /// The license key has reached its activation limit.
+    case activationLimitReached
+
+    /// The license key is disabled or revoked.
+    case licenseDisabled(String)
+
     public var errorDescription: String? {
         switch self {
         case .invalidURL:
@@ -64,6 +70,10 @@ public enum PolarLicenseError: LocalizedError {
             return "Too many requests. Please try again later."
         case .unprocessableEntity(let message):
             return "Invalid request: \(message)"
+        case .activationLimitReached:
+            return "This license key has reached its maximum number of activations. Please deactivate another device or contact support."
+        case .licenseDisabled(let reason):
+            return "This license key has been disabled: \(reason)"
         }
     }
 }

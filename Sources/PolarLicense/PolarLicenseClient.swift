@@ -242,6 +242,16 @@ public actor PolarLicenseClient {
         case 403:
             // Try to extract error detail from response
             if let errorBody = try? JSONDecoder().decode(ErrorResponse.self, from: data) {
+                // Check for specific error types
+                if errorBody.error == "NotPermitted" {
+                    // Check if it's an activation limit error
+                    if let detail = errorBody.detail?.lowercased(),
+                       detail.contains("activation limit") || detail.contains("activations") {
+                        throw PolarLicenseError.activationLimitReached
+                    }
+                    // Other permission errors (disabled, revoked, etc.)
+                    throw PolarLicenseError.licenseDisabled(errorBody.detail ?? "License key is not permitted")
+                }
                 throw PolarLicenseError.httpError(statusCode: 403, message: errorBody.detail ?? "Forbidden")
             }
             throw PolarLicenseError.httpError(statusCode: 403, message: "Forbidden")
@@ -265,5 +275,8 @@ public actor PolarLicenseClient {
 
 /// Error response from Polar API.
 private struct ErrorResponse: Decodable {
+    /// The error type (e.g., "NotPermitted", "ResourceNotFound").
+    let error: String?
+    /// The detailed error message.
     let detail: String?
 }
