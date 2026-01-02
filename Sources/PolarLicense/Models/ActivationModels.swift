@@ -65,8 +65,8 @@ public struct ActivateResponse: Codable, Sendable, Equatable {
     /// When this activation was created.
     public let createdAt: Date
 
-    /// When this activation was last modified.
-    public let modifiedAt: Date
+    /// When this activation was last modified (nil if never modified).
+    public let modifiedAt: Date?
 
     /// The associated license key information.
     public let licenseKey: PolarLicenseKey

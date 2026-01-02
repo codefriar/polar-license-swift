@@ -65,8 +65,8 @@ public struct PolarLicenseKey: Codable, Sendable, Equatable {
     /// When the license key was created.
     public let createdAt: Date
 
-    /// When the license key was last modified.
-    public let modifiedAt: Date
+    /// When the license key was last modified (nil if never modified).
+    public let modifiedAt: Date?
 
     /// Organization ID the license belongs to.
     public let organizationId: String
