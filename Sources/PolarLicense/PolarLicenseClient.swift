@@ -232,11 +232,18 @@ public actor PolarLicenseClient {
             throw PolarLicenseError.invalidResponse
         }
 
+        // Debug logging
+        print("🔑 [PolarClient] Response status: \(httpResponse.statusCode)")
+        if let responseString = String(data: data, encoding: .utf8) {
+            print("🔑 [PolarClient] Response body: \(responseString)")
+        }
+
         switch httpResponse.statusCode {
         case 200:
             do {
                 return try decoder.decode(Response.self, from: data)
             } catch {
+                print("🔑 [PolarClient] Decoding error: \(error)")
                 throw PolarLicenseError.invalidResponse
             }
         case 403:
