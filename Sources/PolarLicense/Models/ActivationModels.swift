@@ -71,11 +71,5 @@ public struct ActivateResponse: Codable, Sendable, Equatable {
     /// The associated license key information.
     public let licenseKey: PolarLicenseKey
 
-    enum CodingKeys: String, CodingKey {
-        case id, label, meta
-        case licenseKeyId = "license_key_id"
-        case createdAt = "created_at"
-        case modifiedAt = "modified_at"
-        case licenseKey = "license_key"
-    }
+    // Note: No CodingKeys needed - using decoder.keyDecodingStrategy = .convertFromSnakeCase
 }

@@ -35,10 +35,7 @@ public struct PolarCustomer: Codable, Sendable, Equatable {
     /// Customer's billing address.
     public let billingAddress: BillingAddress?
 
-    enum CodingKeys: String, CodingKey {
-        case id, email, name
-        case billingAddress = "billing_address"
-    }
+    // Note: No CodingKeys needed - using decoder.keyDecodingStrategy = .convertFromSnakeCase
 }
 
 /// Customer billing address.
@@ -49,10 +46,7 @@ public struct BillingAddress: Codable, Sendable, Equatable {
     public let city: String?
     public let state: String?
 
-    enum CodingKeys: String, CodingKey {
-        case country, line1, city, state
-        case postalCode = "postal_code"
-    }
+    // Note: No CodingKeys needed - using decoder.keyDecodingStrategy = .convertFromSnakeCase
 }
 
 // MARK: - License Key
@@ -104,19 +98,7 @@ public struct PolarLicenseKey: Codable, Sendable, Equatable {
     /// When the license expires (nil = never).
     public let expiresAt: Date?
 
-    enum CodingKeys: String, CodingKey {
-        case id, key, status, usage, validations
-        case createdAt = "created_at"
-        case modifiedAt = "modified_at"
-        case organizationId = "organization_id"
-        case customerId = "customer_id"
-        case benefitId = "benefit_id"
-        case displayKey = "display_key"
-        case limitActivations = "limit_activations"
-        case limitUsage = "limit_usage"
-        case lastValidatedAt = "last_validated_at"
-        case expiresAt = "expires_at"
-    }
+    // Note: No CodingKeys needed - using decoder.keyDecodingStrategy = .convertFromSnakeCase
 }
 
 // MARK: - Activation
@@ -141,10 +123,5 @@ public struct PolarActivation: Codable, Sendable, Equatable {
     /// Custom metadata stored with the activation.
     public let meta: [String: String]?
 
-    enum CodingKeys: String, CodingKey {
-        case id, label, meta
-        case licenseKeyId = "license_key_id"
-        case createdAt = "created_at"
-        case modifiedAt = "modified_at"
-    }
+    // Note: No CodingKeys needed - using decoder.keyDecodingStrategy = .convertFromSnakeCase
 }

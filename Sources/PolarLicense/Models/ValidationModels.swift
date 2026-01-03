@@ -70,8 +70,8 @@ public struct ValidateResponse: Codable, Sendable, Equatable {
     /// When the license key was created.
     public let createdAt: Date
 
-    /// When the license key was last modified.
-    public let modifiedAt: Date
+    /// When the license key was last modified (nil if never modified).
+    public let modifiedAt: Date?
 
     /// Organization ID the license belongs to.
     public let organizationId: String
@@ -115,19 +115,7 @@ public struct ValidateResponse: Codable, Sendable, Equatable {
     /// The activation that was validated (if activation_id was provided).
     public let activation: PolarActivation?
 
-    enum CodingKeys: String, CodingKey {
-        case id, key, status, usage, validations, customer, activation
-        case createdAt = "created_at"
-        case modifiedAt = "modified_at"
-        case organizationId = "organization_id"
-        case customerId = "customer_id"
-        case benefitId = "benefit_id"
-        case displayKey = "display_key"
-        case limitActivations = "limit_activations"
-        case limitUsage = "limit_usage"
-        case lastValidatedAt = "last_validated_at"
-        case expiresAt = "expires_at"
-    }
+    // Note: No CodingKeys needed - using decoder.keyDecodingStrategy = .convertFromSnakeCase
 
     /// Whether the license is currently valid (granted and not expired).
     public var isValid: Bool {
